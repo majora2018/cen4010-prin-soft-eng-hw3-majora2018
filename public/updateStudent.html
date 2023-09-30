@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Update Student</title>
+</head>
+<body>
+
+<h2>Update Student</h2>
+
+<form id="updateStudentForm">
+    <label for="record_id">Record ID:</label><br>
+    <input type="text" id="record_id" name="record_id"><br>
+
+    <label for="first_name">First Name:</label><br>
+    <input type="text" id="first_name" name="first_name"><br>
+
+    <label for="last_name">Last Name:</label><br>
+    <input type="text" id="last_name" name="last_name"><br>
+
+    <label for="gpa">GPA:</label><br>
+    <input type="text" id="gpa" name="gpa"><br>
+
+    <label for="enrolled">Enrolled:</label><br>
+    <input type="text" id="enrolled" name="enrolled"><br>
+
+    <input type="submit" value="Update Student">
+</form>
+
+<script>
+    document.getElementById('updateStudentForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        const recordId = document.getElementById('record_id').value;
+        const firstName = document.getElementById('first_name').value;
+        const lastName = document.getElementById('last_name').value;
+        const gpa = document.getElementById('gpa').value;
+        const enrolled = document.getElementById('enrolled').value;
+
+        const data = {
+            first_name: firstName,
+            last_name: lastName,
+            gpa: gpa,
+            enrolled: enrolled
+        };
+
+        fetch(`/students/${recordId}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+        .then(response => response.json())
+        .then(data => {
+            alert(data.message);
+        })
+        .catch(error => console.error('Error:', error));
+    });
+</script>
+  <div class="navbar">
+    <button onclick="window.location.href='index.html'">Home</button>
+  </div>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Delete Student</title>
+</head>
+<body>
+
+<h2>Delete Student</h2>
+
+<form id="deleteStudentForm">
+    <label for="record_id">Record ID:</label><br>
+    <input type="text" id="record_id" name="record_id"><br>
+
+    <input type="submit" value="Delete Student">
+</form>
+
+<script>
+    document.getElementById('deleteStudentForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        const recordId = document.getElementById('record_id').value;
+
+        fetch(`/students/${recordId}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            alert(data.message);
+        })
+        .catch(error => console.error('Error:', error));
+    });
+</script>
+  <div class="navbar">
+    <button onclick="window.location.href='index.html'">Home</button>
+  </div>
+</body>
+</html>

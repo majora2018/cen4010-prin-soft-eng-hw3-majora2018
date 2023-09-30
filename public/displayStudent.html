@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Display Student by ID</title>
+</head>
+<body>
+
+<h2>Student Information</h2>
+
+<label for="record_id">Enter Record ID:</label>
+<input type="text" id="record_id" placeholder="Enter Record ID">
+<button id="displayStudentButton">Display Student</button>
+
+<div id="studentInfo"></div>
+
+<script>
+    document.getElementById('displayStudentButton').addEventListener('click', function() {
+        const recordId = document.getElementById('record_id').value;
+        const url = `http://localhost:5678/students/${recordId}`;
+
+        fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            const studentInfoDiv = document.getElementById('studentInfo');
+            studentInfoDiv.innerHTML = ''; // Clear previous content
+
+            if (data.message === 'error - resource not found') {
+                studentInfoDiv.innerHTML = 'Student not found.';
+            } else {
+                studentInfoDiv.innerHTML = `
+                    <hr>
+                    <b>Record ID:</b> ${data.record_id}<br>
+                    <b>First Name:</b> ${data.first_name}<br>
+                    <b>Last Name:</b> ${data.last_name}<br>
+                    <b>GPA:</b> ${data.gpa}<br>
+                    <b>Enrolled:</b> ${data.enrolled}<br>
+                `;
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            const studentInfoDiv = document.getElementById('studentInfo');
+            studentInfoDiv.innerHTML = 'Error fetching student information.';
+        });
+    });
+</script>
+  <div class="navbar">
+    <button onclick="window.location.href='index.html'">Home</button>
+  </div>
+</body>
+</html>
