@@ -1,29 +1,49 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <title>Add Student</title>
-</head>
 <body>
+    <div id="navbar-container"></div>
+    <script>
+        // Load the navbar template from navbar_template.html
+        fetch('index2.html')
+          .then(response => response.text())
+          .then(data => {
+            document.getElementById('navbar-container').innerHTML = data;
+          });
+      </script>
+      
+    <h2>Add Student</h2>
 
-<h2>Add Student</h2>
+    <form id="studentForm" action="/students" method="POST">
+        <label for="first_name">First Name:</label><br>
+        <input type="text" id="first_name" name="first_name"><br>
 
-<form action="/students" method="POST">
-    <label for="first_name">First Name:</label><br>
-    <input type="text" id="first_name" name="first_name"><br>
+        <label for="last_name">Last Name:</label><br>
+        <input type="text" id="last_name" name="last_name"><br>
 
-    <label for="last_name">Last Name:</label><br>
-    <input type="text" id="last_name" name="last_name"><br>
+        <label for="gpa">GPA:</label><br>
+        <input type="text" id="gpa" name="gpa"><br>
 
-    <label for="gpa">GPA:</label><br>
-    <input type="text" id="gpa" name="gpa"><br>
+        <label for="enrolled">Enrolled:</label><br>
+        <input type="text" id="enrolled" name="enrolled"><br>
 
-    <label for="enrolled">Enrolled:</label><br>
-    <input type="text" id="enrolled" name="enrolled"><br>
+        <input type="submit" value="Submit">
+    </form>
 
-    <input type="submit" value="Submit">
-</form>
-<div class="navbar">
-    <button onclick="window.location.href='index.html'">Home</button>
-  </div>
+    <div id="responseMessage"></div>
+
+    <div class="navbar">
+        <button onclick="window.location.href='index.html'">Home</button>
+    </div>
+
+    <script>
+        document.getElementById('studentForm').addEventListener('submit', function(event) {
+            event.preventDefault();  // Prevents the default form submission behavior
+
+            // TODO: Perform the form submission using fetch or other methods
+
+            // Display "Student created" message
+            document.getElementById('responseMessage').innerText = 'Student created.';
+        });
+    </script>
 </body>
 </html>

@@ -1,9 +1,16 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <title>Update Student</title>
-</head>
 <body>
+    <div id="navbar-container"></div>
+    
+    <script>
+        // Load the navbar template from navbar_template.html
+        fetch('index2.html')
+          .then(response => response.text())
+          .then(data => {
+            document.getElementById('navbar-container').innerHTML = data;
+          });
+    </script>
 
 <h2>Update Student</h2>
 

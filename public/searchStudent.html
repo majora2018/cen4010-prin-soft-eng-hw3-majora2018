@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<body>
+    <div id="navbar-container"></div>
+
+    <script>
+      // Load the navbar template from navbar_template.html
+      fetch('index2.html')
+        .then(response => response.text())
+        .then(data => {
+          document.getElementById('navbar-container').innerHTML = data;
+        });
+    </script>
+    
+    <h2>Search Student by Last Name</h2>
+    <label for="last_name">Enter Last Name:</label>
+    <input type="text" id="last_name" placeholder="Last Name">
+    <button onclick="searchStudent()">Search</button>
+
+    <div id="studentInfo"></div>
+
+    <script>
+        function searchStudent() {
+            const lastName = document.getElementById('last_name').value;
+            if (!lastName) {
+                alert('Please enter a last name.');
+                return;
+            }
+
+            // Make a GET request to fetch student information
+            fetch(`/students/lastname/${lastName}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    // Display student information
+                    const studentInfoDiv = document.getElementById('studentInfo');
+                    studentInfoDiv.innerHTML = '';
+
+                    if (data.length === 0) {
+                        studentInfoDiv.innerHTML = 'Student not found.';
+                    } else {
+                        data.forEach(student => {
+                            const studentDetails = document.createElement('div');
+                            studentDetails.innerHTML = `
+                                <p><strong>First Name:</strong> ${student.first_name}</p>
+                                <p><strong>Last Name:</strong> ${student.last_name}</p>
+                                <p><strong>GPA:</strong> ${student.gpa}</p>
+                                <p><strong>Enrolled:</strong> ${student.enrolled}</p>
+                                <hr>
+                            `;
+                            studentInfoDiv.appendChild(studentDetails);
+                        });
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+        }
+    </script>
+</body>
+</html>

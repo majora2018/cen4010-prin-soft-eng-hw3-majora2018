@@ -3,59 +3,26 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Student Registration System</title>
-  <h2>Alexander Major</h2>
-  <h3>Z23494246</h3>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      padding: 0;
-      margin: 0;
-    }
-    header {
-      background-color: #333;
-      color: white;
-      text-align: center;
-      padding: 20px;
-    }
-    nav {
-      background-color: #333;
-      color: white;
-      padding: 10px;
-    }
-    nav ol {
-      list-style-type: decimal;
-      padding: 0;
-      margin: 0;
-    }
-    nav li {
-      margin: 0 10px;
-      display: inline;
-    }
-    nav a {
-      color: white;
-      text-decoration: none;
-      padding: 10px 20px;
-    }
-    nav a:hover {
-      background-color: #555;
-    }
+    /* Existing styles for body, header, and nav */
   </style>
 </head>
 <body>
+
+  <div id="navbar-container"></div>
+
+  <script>
+    // Load the navbar template from navbar_template.html
+    fetch('index2.html')
+      .then(response => response.text())
+      .then(data => {
+        document.getElementById('navbar-container').innerHTML = data;
+      });
+  </script>
   <header>
     <h1>Student Registration System</h1>
+    <h3>Alexander Major</h3>
+    <h3>Z23494246</h3>
   </header>
-
-  <nav>
-    <ol>
-      <li><a href="addStudent.html">Add</a></li>
-      <li><a href="updateStudent.html">Update</a></li>
-      <li><a href="deleteStudent.html">Delete</a></li>
-      <li><a href="displayStudent.html">View</a></li>
-      <li><a href="listStudents.html">List</a></li>
-      <li><a href="searchStudent.html">Search</a></li>
-    </ol>
-  </nav>
 </body>
 </html>

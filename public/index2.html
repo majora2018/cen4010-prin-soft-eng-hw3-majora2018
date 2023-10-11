@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Student Registration System</title>
+  <title>Student Search</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 </head>
 <body>
@@ -30,15 +30,61 @@
           <a class="nav-link" href="listStudents.html">List</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="searchStudent.html">Search</a>
+          <form class="form-inline" id="searchForm">
+            <input type="search" class="form-control rounded" placeholder="Search by Last Name" aria-label="Search" aria-describedby="search-addon" id="last_name">
+            <button type="submit" class="btn btn-outline-primary">Search</button>
+          </form>
         </li>
       </ul>
     </div>
   </nav>
 
-  <!-- Your page content goes here -->
-  
+  <div class="container mt-5">
+    <div id="studentInfo"></div>
+  </div>
+
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+  <script>
+    document.getElementById('searchForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        const lastName = document.getElementById('last_name').value;
+        
+        if (!lastName) {
+            alert('Please enter a last name.');
+            return;
+        }
+
+        fetch(`/students/lastname/${lastName}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                const studentInfoDiv = document.getElementById('studentInfo');
+                studentInfoDiv.innerHTML = '';
+
+                if (data.length === 0) {
+                    studentInfoDiv.innerHTML = '<p>No student found with that last name.</p>';
+                } else {
+                    data.forEach(student => {
+                        const studentDetails = document.createElement('div');
+                        studentDetails.innerHTML = `
+                            <p><strong>First Name:</strong> ${student.first_name}</p>
+                            <p><strong>Last Name:</strong> ${student.last_name}</p>
+                            <p><strong>GPA:</strong> ${student.gpa}</p>
+                            <p><strong>Enrolled:</strong> ${student.enrolled}</p>
+                            <hr>
+                        `;
+                        studentInfoDiv.appendChild(studentDetails);
+                    });
+                }
+            })
+            .catch(error => console.error('Error:', error));
+    });
+  </script>
 </body>
 </html>
